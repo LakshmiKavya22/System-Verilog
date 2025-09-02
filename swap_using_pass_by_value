@@ -1,0 +1,22 @@
+pass by values:It copies only values into arguments
+In pass by value arguments and values are different
+module top;
+  task swap(input bit [3:0]a,b);
+    //a and b are arguments
+    bit [3:0]temp;
+    temp=a;
+    a=b;
+    b=temp;
+    $display("a=%0d,b=%0d",a,b);
+  endtask
+  bit [3:0]a;
+  bit [3:0]b;
+  initial
+    begin
+      a=7;
+      b=9;
+      #10;
+      swap(a,b);
+      $display("a=%0d,b=%0d",a,b);
+    end
+endmodule
