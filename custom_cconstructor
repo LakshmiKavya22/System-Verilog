@@ -1,0 +1,53 @@
+class vlsi;
+  int data; //class member /data memeber
+  function new(input int datain=0);
+    data=datain; //class member =Function arg
+  endfunction
+endclass
+module tb;
+  vlsi v;
+  initial begin
+    v=new(31);
+    $display("Data=%0d",v.data);
+  end
+endmodule
+output:data=31
+
+MULTIPLE CLASS MEMEBERS AND FUNCTION ARGUMENTS
+class vlsi;
+  int data; 
+  bit [7:0]data1;
+  shortint data2;
+  function new(input int datain=0,input bit [7:0]datain1=8'h00,input shortint datain2=0);
+    data=datain;
+    data1=datain1;
+    data2=datain2;
+  endfunction
+endclass
+module tb;
+  vlsi v;
+  initial begin
+    v=new(31 ,20, 19);
+    $display("Data=%0d Data1=%0d,Dagta2=%0d",v.data,v.data1,v.data2);
+  end
+endmodule
+OUTPUT Data=31,data1=20,Data2=19
+USING THIS KEYWORD /USING SAME NAME FOR CLASS MEMEBERS AND FUNCTION ARGUMENTS:
+class vlsi;
+  int data; 
+  bit [7:0]data1;
+  shortint data2;
+  function new(input int data=0,input bit [7:0]data1=8'h00,input shortint data2=0);
+    this.data=data;
+    this.data1=data1;
+    this.data2=data2;
+  endfunction
+endclass
+module tb;
+  vlsi v;
+  initial begin
+    v=new(31 ,20, 19);
+    $display("Data=%0d Data1=%0d,Dagta2=%0d",v.data,v.data1,v.data2);
+  end
+endmodule
+OUTPUT: KERNEL: Data=31 Data1=20,Dagta2=19
