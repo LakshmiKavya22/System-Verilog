@@ -15,6 +15,7 @@ module tb;
   end
 endmodule
 //Whenever we use pass by refernce the output will be modified so the values of will be updated.
+//pass by Refernce is used for Multibit or vectors
 KERNEL: a[0]=0
 # KERNEL: a[1]=1
 # KERNEL: a[2]=2
@@ -43,6 +44,7 @@ module tb;
   end
 endmodule
 //Whenever we use input at task arguments it will represent pass by value so the first value of i i.e 0 will be copied to all array values.
+//pass by reference is Used for single bit /Scalars
  KERNEL: a[0]=0
 # KERNEL: a[1]=0
 # KERNEL: a[2]=0
