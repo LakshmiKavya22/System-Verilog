@@ -1,0 +1,25 @@
+// Code your testbench here
+// or browse Examples
+class vlsi;
+  int a;
+  int b;
+endclass
+module tb;
+  vlsi v1,v2;
+  initial begin
+    v1=new();
+    v2=new();
+    v2.a=10;
+    v1=v2;//v1=v2.a v2.b
+    //Here the destination handle memeory location will be deleted and both pointing towards the Same memory location
+    $display("V1=%0d",v1.a);
+    $display("V1=%0p",v1);
+    v2.a=20;
+    $display("V1=%0p",v1);
+  end
+endmodule
+//Here whenever v1=v2 condition applies The v1(Destination handle) memory will be deleted and both points at same memory location 
+//No memeory is allocated for Destination handle
+//copy with handle supports Same Memory
+//DRAWBACK: Whenever there is a change in source it will effect the entire code
+    
