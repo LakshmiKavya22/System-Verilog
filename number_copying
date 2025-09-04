@@ -1,0 +1,15 @@
+module tb;
+  int a,b;
+  initial begin
+    a=9;b=7;
+    $display("a=%0d,b=%0d",a,b);
+    b=a;
+    $display("a=%0d,b=%0d",a,b);
+    a=20;
+    $display("b=%0d",b);
+  end
+endmodule
+ //Here Variables stored in different memeory locations   
+//Non object properties supports Separated memeory loactaions
+//In Number copying sepeate memory locations are used for the given variables 
+//So that why the change /copy of b=a shows only once
