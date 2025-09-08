@@ -1,0 +1,12 @@
+// Code your testbench here
+// or browse Examples
+module tb;
+  int num=65;
+  string ascii;
+  initial begin
+    ascii.itoa(num);
+    $display("num=%0d",num);
+    $display("ascii=%s",ascii);//it converts 65 in string
+    $display("char=%s",{byte'(num)});//It converts 65 as A 
+  end
+endmodule
