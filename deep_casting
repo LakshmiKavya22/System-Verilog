@@ -61,3 +61,46 @@ module tb;
     s2.display("s2");
   end
 endmodule
+
+
+(or)
+class packet ;
+  int data;
+endclass
+class vlsi;
+  int a;
+  int b;
+  packet pck=new();
+  function void print();
+    $display("a=%0d",a);
+    $display("b=%0d",b);
+    $display("pck=%0p",pck);
+  endfunction
+  function void copy(output vlsi v);
+    v=new();
+    v.a=a;
+    v.b=b;
+    v.pck=new();
+    v.pck.data=pck.data;
+  endfunction
+endclass
+module tb;
+  vlsi v1,v2;
+  initial begin
+    v1=new();
+    v2=new();
+    v2.a=10;
+    v2.pck.data=300;
+    //v1=new v2;
+    v2.copy(v1);
+    $display("v1=%0p",v1);
+    $dispaly("v2=%0p",v2);
+    v2.a=25;v2.b=30;
+    v1.print();
+    v2.print();
+    v2.a=55;v2.b=70;
+    v2.pck.data=700;
+    v1.print();
+    v2.print();
+  end
+endmodule
