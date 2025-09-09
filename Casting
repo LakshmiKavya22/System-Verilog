@@ -1,12 +1,12 @@
 ///STATIC CASTING///
 module top;
- 	 int a;
- 	 byte unsigned b;
+ 	 int a; //signed Data type (32 bit Wide)
+ 	 byte unsigned b;//Unsigned data Type (8-bit Wide)
   	initial begin
   	a=-30;
-    	b=a;
+    	b=a; //Implicit conversion :For simple codes
     	$display(" b=%0d", b);
-    	b=byte'(a);
+    	b=byte'(a);   //Explicit Conversion :For complex codes
     	$display(" b=%0d", b);
   	end
 	endmodule
