@@ -13,20 +13,48 @@ module top;
 
 
 ////DYANAMIC CASTING///
-class eth_pkt;
-  int count ;
-endclass
-
-class eth_good_pkt extends eth_pkt;
+//Down_casting
+class ethernet_packet;
   int a;
 endclass
-
-module top;
-bit f;
-  eth_pkt pkt=new();
-  eth_good_pkt g_pkt=new();	
+class good_ethernet_packet extends ethernet_packet;
+  int b;
+endclass
+module tb;
+  bit y;
+  ethernet_packet eth_pkt;
+  good_ethernet_packet g_pkt;
   initial begin
-   $cast ( g_pkt,pkt) ; // $cast is called System Task
-   //f=$cast ( pkt,g_pkt) ; // System Function
+    eth_pkt=new();
+    g_pkt=new();
+    $cast(g_pkt,eth_pkt);
+    y=$cast(g_pkt,eth_pkt);
+    $display("Y=%0d",y);
+  end
+endmodule'
+//*SYSTEM TASK O/P : Illegal conversion to object of class good_ethernet_packet from object of class ethernet_packet.
+SYSTEM FUNCTION O/P: Y=0*//
+
+
+
+//UP_casting
+class ethernet_packet;
+  int a;
+endclass
+class good_ethernet_packet extends ethernet_packet;
+  int b;
+endclass
+module tb;
+  bit y;
+  ethernet_packet eth_pkt;
+  good_ethernet_packet g_pkt;
+  initial begin
+    eth_pkt=new();
+    g_pkt=new();
+    $cast(eth_pkt,g_pkt);
+    y=$cast(eth_pkt,g_pkt);
+    $display("Y=%0d",y);
   end
 endmodule
+//SYSTEM TASK O/P : Compile success 0 Errors 0 Warnings 
+//SYSTEM FUNCTION O/P: Y=1
