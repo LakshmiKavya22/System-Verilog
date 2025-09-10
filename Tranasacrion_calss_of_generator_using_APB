@@ -1,0 +1,183 @@
+// Code your testbench here
+// or browse Examples
+class apb_tx;
+//Properties of the class
+  rand bit wr_rd;
+  rand bit [7:0]addr;
+  rand bit [31:0]data;
+  rand bit [3:0]sel; //There is a possibility of 16 slaves to select because 2^4=16;
+  //Methods of the class i.e Functions are tasks
+  function  void print();
+    $display("wr_rd=%0b",wr_rd);
+    $display("addr=%0h",addr);
+    $display("data=%0h",data);
+    $display("sel=%0d",sel);
+  endfunction
+  //Constriants is nothing but a rule/restriction
+  constraint sel_c{
+    sel inside{4'b0010,4'b0100,4'b1000,4'b1001,4'b0000};
+  }
+endclass
+
+module tb;
+  apb_tx tx; //Dynamic data type
+  //The size of tx=size(wr_rd)+size(addr)+size(data)+size(sel)=45 bits
+  initial begin
+    tx=new();
+    tx.print();
+    tx.randomize();
+    tx.print();
+  end
+endmodule
+/*We use constraints whenever we have a rule to do like i have 16 possibles for the selection of slave but i have a rule to choose from the 5 slaves so that time i will use constarint 
+Randomize concept is used to drive random stimulus we use rand keyword in the properties and randomize in tb both are interlinked to produce random stimulus
+**If we use display to print the o/p it will print all stimulus in one format like decimals so inorder to print stimulus in different formats we need to use print function in the class which is a method
+
+
+
+// Code your testbench here
+// or browse Examples
+class apb_tx;
+//Properties of the class
+  bit wr_rd=1;
+  rand bit [7:0]addr;
+  rand bit [31:0]data;
+  rand bit [3:0]sel; //There is a possibility of 16 slaves to select because 2^4=16;
+  //Methods of the class i.e Functions are tasks
+  function  void print();
+    $display("wr_rd=%0b",wr_rd);
+    $display("addr=%0h",addr);
+    $display("data=%0h",data);
+    $display("sel=%0d",sel);
+  endfunction
+  //Constriants is nothing but a rule/restriction
+  constraint sel_c{
+    sel inside{4'b0010};
+  }
+endclass
+
+module tb;
+  apb_tx tx=new(); //Dynamic data type
+  //The size of tx=size(wr_rd)+size(addr)+size(data)+size(sel)=45 bits
+  initial begin
+    repeat(10) begin
+    tx.randomize();
+    tx.print();
+    end
+  end
+endmodule
+//When we want to do only write operation we can manually give one to wr_ar and remove rand keyword before variable
+//If we want to give  multiple stimulus then we need to use to use repeat keyword
+// If we wnat to only coomunicate with only one slave then we need to give one slave id in the constarint
+
+
+
+// Code your testbench here
+// or browse Examples
+class apb_tx;
+//Properties of the class
+  bit wr_rd=1;
+  rand bit [7:0]addr;
+  rand bit [31:0]data;
+  rand bit [3:0]sel; //There is a possibility of 16 slaves to select because 2^4=16;
+  //Methods of the class i.e Functions are tasks
+  function  void print();
+    $display("wr_rd=%0b",wr_rd);
+    $display("addr=%0h",addr);
+    $display("data=%0h",data);
+    $display("sel=%0d",sel);
+  endfunction
+  //Constriants is nothing but a rule/restriction
+  constraint sel_c{
+    sel inside{4'b0010};
+  }
+endclass
+
+module tb;
+  apb_tx tx=new(); //Dynamic data type
+  //The size of tx=size(wr_rd)+size(addr)+size(data)+size(sel)=45 bits
+  initial begin
+    repeat(10) begin
+    tx.randomize();
+    tx.print();
+    end
+  end
+endmodule
+//When we want to do only write operation we can manually give one to wr_ar and remove rand keyword before variable
+//If we want to give  multiple stimulus then we need to use to use repeat keyword
+// If we wnat to only coomunicate with only one slave then we need to give one slave id in the constarint
+
+  // Code your testbench here
+// or browse Examples
+class apb_tx;
+//Properties of the class
+  rand bit wr_rd;
+  rand bit [7:0]addr;
+  rand bit [31:0]data;
+  rand bit [3:0]sel; //There is a possibility of 16 slaves to select because 2^4=16;
+  //Methods of the class i.e Functions are tasks
+  function  void print();
+    $display("wr_rd=%0b",wr_rd);
+    $display("addr=%0h",addr);
+    $display("data=%0h",data);
+    $display("sel=%0d",sel);
+  endfunction
+  //Constriants is nothing but a rule/restriction
+  constraint sel_c{
+    sel inside{4'b0010};
+  }
+  constraint sel_c{
+    sel inside{4'b1010};
+  }
+endclass
+
+module tb;
+  apb_tx tx=new(); //Dynamic data type
+  //The size of tx=size(wr_rd)+size(addr)+size(data)+size(sel)=45 bits
+  initial begin
+    repeat(10) begin
+      assert(tx.randomize());
+    tx.print();
+    end
+  end
+endmodule
+//whenever we use two constraints in a single class of particular variable there is an constarin conflict which will result in failure of randomization and will give default values.
+RCKERNEL: Warning: RC_0024 testbench.sv(30): Randomization failed. The condition of randomize call cannot be satisfied.
+
+// Code your testbench here
+// or browse Examples
+class apb_tx;
+//Properties of the class
+   bit wr_rd=1;
+  rand bit [7:0]addr;
+  rand bit [31:0]data;
+  rand bit [3:0]sel; //There is a possibility of 16 slaves to select because 2^4=16;
+  //Methods of the class i.e Functions are tasks
+  function  void print();
+    $display("wr_rd=%0b",wr_rd);
+    $display("addr=%0h",addr);
+    $display("data=%0h",data);
+    $display("sel=%0d",sel);
+  endfunction
+  //Constriants is nothing but a rule/restriction
+  constraint sel_c{
+    sel inside{4'b0010};
+  }
+  constraint sel_c1{
+    sel inside{4'b1010};
+  }
+endclass
+
+module tb;
+  apb_tx tx=new(); //Dynamic data type
+  //The size of tx=size(wr_rd)+size(addr)+size(data)+size(sel)=45 bits
+  initial begin
+    repeat(10) begin
+      tx.randomize();
+    tx.print();
+    end
+  end
+endmodule
+//When u give a manual values to the any of the property and u have two constarints u will get random values as 0 and the manual value to the property variable
+  
+  
