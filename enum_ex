@@ -36,4 +36,19 @@ module tb;
     $display("color6=%0d,name=%0s",color6,color6.name());
   end
 endmodule
+
+ // Code your testbench here
+// or browse Examples
+module tb;
+  //Starting from 0
+  typedef enum{GREEN,YELLOW,RED,BLUE}colour_set1;
+  initial begin
+    colour_set1 color1;
+    $display("color1.first()=%0d,name=%0s",color1.first(), color1.first.name());
+    $display("color1.last()=%0d,name=%0s",color1.last(), color1.last.name());
+    $display("color1.next(2)=%0d,name=%0s",color1.next(2), color1.next.name());
+    $display("color1.prev(2)=%0d,name=%0s",color1.prev(2), color1.prev.name());
+    $display("color1.num()=%0d,name=%0s",color1.num());
+  end
+endmodule
     
