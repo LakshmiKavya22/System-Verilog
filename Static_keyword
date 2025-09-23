@@ -106,6 +106,7 @@ endmodule
 # KERNEL: a=30,b=22
 
 ----> In static classes the data members are accessed by object handles as well as parent class name.
+     Here scope operator [::] is used in accessing data members with parent class name
 
     
     
