@@ -28,12 +28,12 @@ c=3
 a=10 b=7
 d=10
 
-//Whenever we dont use any keyword in front of class properties it will treat as Global/public variables which can be accessed in class, In child class and in module also
+//Whenever we dont use any keyword in front of class properties it will treat as Global/public variables which can be accessed in parent class, In child class and in module also
 
 
 class parent;
-  int a=10;
-  int b=7;
+  local int a=10;
+  local int b=7;
   function void print();
     $display("a=%0d,b=%0d",a,b);
   endfunction
