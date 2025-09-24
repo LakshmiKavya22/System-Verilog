@@ -1,0 +1,50 @@
+// Code your testbench here
+// or browse Examples
+virtual class base;
+  int a;
+  int b;
+  function void print();
+    $display("a=%0d,b=%0d",a,b);
+  endfunction
+endclass
+module tb;
+  base b;
+  initial begin
+    b=new();
+    b.print();
+    b.a=10;
+    b.b=15;
+    b.print();
+  end
+endmodule
+
+OUTPUT:
+ERROR VCP2937 "Cannot instantiate abstract class: base." "testbench.sv" 14  12
+
+ABSTRACT CLASS WITH ADDING A CHILD CLASS OR SUB CLASS
+
+// Code your testbench here
+// or browse Examples
+virtual class base;
+  int a;
+  int b;
+  function void print();
+    $display("a=%0d,b=%0d",a,b);
+  endfunction
+endclass
+class sub extends base;
+endclass
+module tb;
+  sub s;
+  initial begin
+    s=new();
+    s.print();
+    s.a=10;
+    s.b=15;
+    s.print();
+  end
+endmodule
+OUTPUT:
+# KERNEL: a=0,b=0
+# KERNEL: a=10,b=15
+             
