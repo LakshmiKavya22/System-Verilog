@@ -47,4 +47,87 @@ endmodule
 OUTPUT:
 # KERNEL: a=0,b=0
 # KERNEL: a=10,b=15
+
+
+
+
+ABSTACT CLASS NEED:
+
+class remote;
+   virtual function void presspower();
+    $display("Default:No devicde is selected");
+  endfunction
+endclass
+class fan extends remote;
+  function void presspower();
+    $display("Fan : on /off");
+  endfunction 
+endclass
+class ac extends remote;
+  /*function void presspower();
+    $display("Ac : on /off");
+  endfunction */
+endclass
+class light extends remote;
+  function void presspower();
+    $display("light : on /off");
+  endfunction 
+endclass
+
+module tb;
+  remote device[3];
+  initial begin
+    //polymorphism
+    //Base class handle=child class
+    device[0]=fan::new();
+    device[1]=ac::new();
+    device[2]=light::new();
+    foreach(device[i])
+      device[i].presspower();
+  end
+endmodule
+
+Without abstract class, If we miss any method in class the base class handle points to the same base class in the place of that child class.
+
+
+
+WITH ABSTRACT CLASS:
+virtual class remote;
+   pure virtual  function void presspower();
+    /*$display("Default:No devicde is selected");
+  endfunction*/
+endclass
+class fan extends remote;
+  function void presspower();
+    $display("Fan : on /off");
+  endfunction 
+endclass
+class ac extends remote;
+  /*function void presspower();
+    $display("Ac : on /off");
+  endfunction */
+endclass
+class light extends remote;
+  function void presspower();
+    $display("light : on /off");
+  endfunction 
+endclass
+
+module tb;
+  remote device[3];
+  initial begin
+    //polymorphism
+    //Base class handle=child class
+    device[0]=fan::new();
+    device[1]=ac::new();
+    device[2]=light::new();
+    foreach(device[i])
+      device[i].presspower();
+  end
+endmodule
+ 
+With abstract class, If we miss any method in class there  is a compilation error to intimate user to there is a error.
+
+"Cannot declare class ac as non abstract class due to not implemented pure virtual methods:" "testbench.sv" 11  9
+
              
