@@ -1,0 +1,72 @@
+module tb;
+  initial begin
+    int a=50;
+    int b=100;
+    unique if(a==b)
+      $display("a is Equal to b");
+    else if(a<b)
+      $display("a is less than b");
+    else if(a>100)
+      $display("a is greater than 100");
+    else
+      $display("Exit condition");
+  end
+endmodule
+
+OUTPUT: a less than b
+
+module tb;
+  initial begin
+    int a=50;
+    int b=100;
+     unique if(a==b)
+      $display("a is Equal to b");
+    else if(a<b)
+      $display("a is less than b");
+    else if(a<100)
+      $display("a is greater than 100");
+    else
+      $display("Exit condition");
+  end
+endmodule
+
+OUTPUT:
+# KERNEL: a is less than b
+# ASSERT: Error: Assertion 'unique_if_1' FAILED at time: 0, testbench.sv(7), scope: tb.0unnblk. Two or more conditions are true simultaneously: a<b (line: 9), a<100. (line: 11)
+
+module tb;
+  initial begin
+    int a=50;
+    int b=100;
+     unique if(a==b)
+      $display("a is Equal to b");
+    else if(a>b)
+      $display("a is less than b");
+    else if(a>100)
+      $display("a is greater than 100");
+    else
+      $display("Exit condition");
+  end
+endmodule
+
+OUTPUT:
+Exit condition
+
+module tb;
+  initial begin
+    int a=50;
+    int b=100;
+     unique if(a==b)
+      $display("a is Equal to b");
+    else if(a>b)
+      $display("a is less than b");
+    else if(a>100)
+      $display("a is greater than 100");
+    //else
+     // $display("Exit condition");
+  end
+endmodule
+
+OUTPUT:
+# KERNEL: ASDB file was created in location /home/runner/dataset.asdb
+# KERNEL: Warning: unique_if_1: testbench.sv(7), scope: tb.0unnblk, time: 0. None of 'if' branches matched.
