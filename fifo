@@ -1,0 +1,35 @@
+class fifo;
+  int intQ[$];
+  function void put(int a);
+    intQ.push_back(a);
+  endfunction
+  function void get(output int a);
+    a=intQ.pop_front();
+  endfunction
+endclass
+module top;
+  fifo h_fifo=new();
+  int num;
+  initial begin
+    repeat(5) begin
+      num=$urandom_range(10,30);
+      h_fifo.put(num);
+      $display("num=%0d",num);
+    end
+    repeat(5) begin
+      h_fifo.get(num);
+      $display("num=%0d",num);
+    end
+  end
+
+OUTPUT:
+# KERNEL: num=17
+# KERNEL: num=15
+# KERNEL: num=11
+# KERNEL: num=17
+# KERNEL: num=15
+# KERNEL: num=17
+# KERNEL: num=15
+# KERNEL: num=11
+# KERNEL: num=17
+# KERNEL: num=15
