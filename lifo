@@ -34,3 +34,34 @@ OUTPUT:
 # KERNEL: num=11
 # KERNEL: num=15
 # KERNEL: num=17
+
+
+`define lifo 0
+`define fifo 1
+class lifo_fifo #(bit ds_type=`lifo);
+  int intQ[$];
+  function void put(int a);
+    intQ.push_back(a);
+  endfunction
+  function void get(output int a);
+    if(ds_type==`lifo)
+    a=intQ.pop_back();
+    if(ds_type==`fifo)
+      a=intQ.pop_front();
+  endfunction
+endclass
+module top;
+  lifo_fifo #(.ds_type(`lifo))h_lifo=new();
+  int num;
+  initial begin
+    repeat(5) begin
+      num=$urandom_range(10,30);
+      h_lifo.put(num);
+      $display("num=%0d",num);
+    end
+    repeat(5) begin
+      h_lifo.get(num);
+      $display("num=%0d",num);
+    end
+  end
+endmodule
