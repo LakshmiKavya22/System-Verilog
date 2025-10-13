@@ -61,3 +61,55 @@ OUTPUT:
 # KERNEL: a=19,b=20,c=40,d=61,e=109
 # KERNEL: a=13,b=20,c=16,d=73,e=109
 # KERNEL: a=12,b=20,c=13,d=79,e=98
+
+
+Distributive constraint
+
+// Code your testbench here
+// or browse Examples
+class sample ;
+  rand int a;
+  constraint cd{ a dist{[100:290]:/2,[350:1000]:/3,[1500:2500]:/5};}
+                    or
+//////constraint cd{ a dist{200:=2,400:=3,600:=5};}
+endclass
+module tb;
+  sample s;
+  initial begin
+    s=new();
+    repeat(10) begin
+      assert(s.randomize());
+      $display("a=%0d",s.a);
+    end
+  end
+endmodule
+
+OUTPUT:
+# KERNEL: a=184
+# KERNEL: a=937
+# KERNEL: a=992
+# KERNEL: a=994
+# KERNEL: a=2108
+# KERNEL: a=161
+# KERNEL: a=1653
+# KERNEL: a=152
+# KERNEL: a=2432
+
+
+// Code your testbench here
+// or browse Examples
+class sample;
+  rand bit [7:0]arr_d[];
+  constraint cu{unique{arr_d}; arr_d.size==10;}
+endclass
+module tb;
+  sample s; 2
+  integer i;
+  initial begin
+    s=new();
+    assert(s.randomize());
+    foreach (s.arr_d[i])
+      $display("arr[%0d]=%0d",i,s.arr_d[i]);
+  end
+endmodule
+//for any kind of arrays whenever we need randomized unique values we use unique constraint.
