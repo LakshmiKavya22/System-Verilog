@@ -103,7 +103,7 @@ class sample;
   constraint cu{unique{arr_d}; arr_d.size==10;}
 endclass
 module tb;
-  sample s; 2
+  sample s; 
   integer i;
   initial begin
     s=new();
@@ -113,3 +113,59 @@ module tb;
   end
 endmodule
 //for any kind of arrays whenever we need randomized unique values we use unique constraint.
+
+
+SOFT KEYWORD:
+class sample;
+  rand bit [7:0]t;
+  constraint c1{ {t==10};}
+endclass
+module tb;
+  sample s=new();
+  initial begin
+    assert(s.randomize());
+    $display("t=%0d",s.t);
+    assert(s.randomize() with {t==11;});
+    $display("t=%0d",s.t);
+  end
+endmodule
+# KERNEL: t=10
+//If there is no keyword soft the condition of time will be accepted only in the constraint only 
+//Example for this condition is mant biometrics and frs can be activated at a particular time only 
+
+
+class sample;
+  rand bit [7:0]t;
+  constraint c1{ soft {t==10};}
+endclass
+module tb;
+  sample s=new();
+  initial begin
+    assert(s.randomize());
+    $display("t=%0d",s.t);
+    assert(s.randomize() with {t==11;});
+    $display("t=%0d",s.t);
+  end
+endmodule
+#KERNEL: t=10
+#KERNEL: t=11
+//Soft keyword is used to override the condition or change the particularity of time.
+
+Solve before Constraint
+
+//solve before Constraint
+//b==a+15
+class sample;
+  rand bit [7:0]a,b;
+  constraint c1{solve a before b;}
+  constraint c2{b==a+15;}
+endclass
+module tb;
+  sample s=new();
+  initial begin
+    assert(s.randomize());
+    $display("a=%0d,b=%0d",s.a,s.b);
+  end
+endmodule
+
+
