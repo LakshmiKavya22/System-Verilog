@@ -1,0 +1,62 @@
+
+****** RANdOMIZATION MODES
+
+class sample;
+  rand bit[7:0]a,b,c;
+  constraint c1{a-b-c==20;}
+endclass
+module tb;
+  sample s=new();
+  initial begin
+    s.a=100;
+    s.a.rand_mode(0);// A is disabled to randomize
+    assert(s.randomize());
+    $display("a=%0d,b=%0d,c=%0d",s.a,s.b,s.c);
+    s.a.rand_mode(1);// A is enabled to randomize
+    assert(s.randomize());
+    $display("a=%0d,b=%0d,c=%0d",s.a,s.b,s.c);
+    s.rand_mode(0);//randomization is disabled
+    assert(s.randomize());
+    $display("a=%0d,b=%0d,c=%0d",s.a,s.b,s.c);
+    s.rand_mode(1);//randomization is enabled
+    assert(s.randomize());
+    $display("a=%0d,b=%0d,c=%0d",s.a,s.b,s.c);
+  end
+endmodule
+
+# KERNEL: a=100,b=7,c=73
+# KERNEL: a=160,b=113,c=27
+# KERNEL: a=160,b=113,c=27
+# KERNEL: a=226,b=191,c=15
+
+
+CONSTRAINT MODES:
+
+class sample;
+  rand bit[7:0]a,b;
+  constraint c1{ a inside{ [40:60]};}
+  constraint c2{ b inside{10,20,30};}
+endclass
+module tb;
+  sample s=new();
+  initial begin
+    //repeat(5) begin // To produce 5 randomized values
+    assert(s.randomize());
+    $display("a=%0d.b=%0d",s.a,s.b);
+    s.c1.constraint_mode(0);//C1 is disabled that means the condition in c1 doesnt obeyss
+    assert(s.randomize());
+    $display("a=%0d.b=%0d",s.a,s.b);
+    s.c1.constraint_mode(1);//C1 is enabled that means the condition in c1  obeyss
+    assert(s.randomize());
+    $display("a=%0d.b=%0d",s.a,s.b);
+    s.c2.constraint_mode(0);//C2 is disabled that means the condition in c1 doesnt obeyss
+    assert(s.randomize());
+    $display("a=%0d.b=%0d",s.a,s.b);
+  //end
+  end
+endmodule
+
+# KERNEL: a=47.b=20
+# KERNEL: a=160.b=10
+# KERNEL: a=48.b=20
+# KERNEL: a=41.b=74
