@@ -225,3 +225,41 @@ module tb;
   end
 endmodule
 
+
+
+//consider a 4 bit dyanamic array in such a way that the size of given dyanamic array is 10 to 15 and store even values in odd locations and odd values in even locations
+
+class sample;
+  rand bit [3:0]a[];
+  integer i;
+  constraint c1{ a.size inside{[10:15]};
+                foreach(a[i])
+                  i%2==0 -> a[i]%2==1;
+                  i%2==1-> a[i]%2==0;
+               }
+endclass
+module tb;
+  sample s; 
+  initial begin
+    s=new();
+    assert(s.randomize());
+    foreach (s.a[i])
+      $display("arr[%0d]=%0d",i,s.a[i]);
+  end
+endmodule
+
+# KERNEL: arr[0]=3
+# KERNEL: arr[1]=8
+# KERNEL: arr[2]=5
+# KERNEL: arr[3]=10
+# KERNEL: arr[4]=15
+# KERNEL: arr[5]=10
+# KERNEL: arr[6]=13
+# KERNEL: arr[7]=11
+# KERNEL: arr[8]=11
+# KERNEL: arr[9]=13
+# KERNEL: arr[10]=9
+# KERNEL: arr[11]=13
+# KERNEL: arr[12]=7
+# KERNEL: arr[13]=4
+
