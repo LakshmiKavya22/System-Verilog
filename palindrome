@@ -1,0 +1,32 @@
+class sample;
+  rand int num;
+  int rev;
+  int rem;
+  bit res;
+  int temp;
+  constraint c1{ num inside{[11:1000]};}
+  function void print();
+    temp=num;
+    rev=0;
+    while (temp>0) begin
+      rem=temp%10;
+      rev=rev*10+rem;
+      temp=temp/10;
+    end
+    if (num==rev)
+      res=1;
+    else
+      res=0;
+  endfunction
+endclass
+module tb;
+  sample s=new();
+  initial begin
+    repeat(10) begin
+      assert(s.randomize());
+      s.print();
+    $display("num=%0d,rev=%0d,res%0b",s.num,s.rev,s.res);
+  end
+  end
+endmodule
+  
